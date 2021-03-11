@@ -1,0 +1,1 @@
+{ "reminders": [ { "reminder": "what to remind", "date": "2021-03-04", "time": "05:00:pm" } ], "alarms": [ { "alarm": "open", "time": "02:00:pm" } ] }
