@@ -32,7 +32,7 @@ class ShowReminder():
 		self.root.resizable(True, True)
 
 		# main frame (inside root) config
-		self.mainFrame = Frame(self.root, padx=10, pady = 10, bg="Black")
+		self.mainFrame = Frame(self.root, padx=10, pady = 10, bg="DarkKhaki") #DarkKhaki, Olive, Yellow, Teal, turquoise, chocolate
 		self.mainFrame.pack(side="bottom", fill=BOTH, expand=1)
 
 		# reminder labelFrame (inside main frame) config
@@ -51,14 +51,15 @@ class ShowReminder():
 		self.btn12 = Button(self.buttonRow, text="Show", command=self.showContent, fg="Orange", bg="Black").grid(row=0, column=1)
 		self.btn1 = Button(self.buttonRow, text="Dismiss", underline="0", command=self.dismissReminder, fg="Orange", bg="Black").grid(row=0, column=1)
 		self.btn2 = Button(self.buttonRow, text="Edit", underline="0" , command=self.editReminder, fg="Orange", bg="Black").grid(row=0, column=2)
+		self.btn22 = Button(self.buttonRow, text="Put To Silence", underline="0" , command=self.putToSilence, fg="Orange", bg="Black").grid(row=0, column=3)
 		self.buttonRow.grid_columnconfigure(3, minsize=10)
 		self.buttonRow.pack()
 		
 		# button frame2 (inside main frame) config
 		self.buttonRow2 = Frame(self.mainFrame, padx=10, pady=10, bg="Black")
 		self.btn3 = Button(self.buttonRow2, text="Remind in 10", underline="11", command=self.remindIn10, fg="Orange", bg="Black").grid(row=0, column=1)
-		self.btn4 = Button(self.buttonRow2, text="Remind in an hour[M]", underline="18", command=self.remindInHour, fg="Orange", bg="Black").grid(row=0, column=2)
-		self.btn4_5 = Button(self.buttonRow2, text="Remind in 6 hours[L]", underline="18", command=self.remindIn6Hours, fg="Orange", bg="Black").grid(row=0, column=3)
+		self.btn4 = Button(self.buttonRow2, text="Remind in an hour[L]", underline="18", command=self.remindInHour, fg="Orange", bg="Black").grid(row=0, column=2)
+		self.btn4_5 = Button(self.buttonRow2, text="Remind in 6 hours[M]", underline="18", command=self.remindIn6Hours, fg="Orange", bg="Black").grid(row=0, column=3)
 		self.btn5 = Button(self.buttonRow2, text="Remind in 12 hours[K]", underline="19", command=self.remindIn12Hours, fg="Orange", bg="Black").grid(row=0, column=4)
 		self.buttonRow2.grid_columnconfigure(3, minsize=10)
 		self.buttonRow2.pack()
@@ -66,8 +67,8 @@ class ShowReminder():
 		# button frame3 (inside main frame) config
 		self.buttonRow3 = Frame(self.mainFrame, padx=10, pady=10, bg="Black")
 		self.btn6 = Button(self.buttonRow3, text="Remind me T'moro", underline='10', command=self.remindTomorrow, fg="Orange", bg="Black").grid(row=0, column=1)
-		self.btn7 = Button(self.buttonRow3, text="Remind in 2 Days ", underline='10', command=self.remindIn2Days, fg="Orange", bg="Black").grid(row=0, column=2)
-		self.btn8 = Button(self.buttonRow3, text="Remind in 3 Days", underline='10', command=self.remindIn3Days, fg="Orange", bg="Black").grid(row=0, column=3)
+		self.btn7 = Button(self.buttonRow3, text="Remind in 2 Days ", command=self.remindIn2Days, fg="Orange", bg="Black").grid(row=0, column=2)
+		self.btn8 = Button(self.buttonRow3, text="Remind in 3 Days", command=self.remindIn3Days, fg="Orange", bg="Black").grid(row=0, column=3)
 		self.buttonRow3.grid_columnconfigure(3, minsize=10)
 		self.buttonRow3.pack()
 
@@ -84,16 +85,17 @@ class ShowReminder():
 		self.root.attributes("-topmost", True)
 		self.root.bind('<Alt-d>', lambda event: self.dismissReminder())
 		self.root.bind('<Alt-s>', lambda event: self.showContent())
+		self.root.bind('<Alt-p>', lambda event: self.putToSilence())
 		self.root.bind('<Alt-0>', lambda event: self.remindIn10())
-		self.root.bind('<Alt-m>', lambda event: self.remindInHour())
-		self.root.bind('<Alt-l>', lambda event: self.remindIn6Hours())
+		self.root.bind('<Alt-l>', lambda event: self.remindInHour())
+		self.root.bind('<Alt-m>', lambda event: self.remindIn6Hours())
 		self.root.bind('<Alt-k>', lambda event: self.remindIn12Hours())
 		self.root.bind('<Alt-t>', lambda event: self.remindTomorrow())
-		self.root.bind('<Alt-2>', lambda event: self.remindIn2Days())
-		self.root.bind('<Alt-3>', lambda event: self.remindIn3Days())
+		# self.root.bind('<Alt-2>', lambda event: self.remindIn2Days())
+		# self.root.bind('<Alt-3>', lambda event: self.remindIn3Days())
 		self.root.update()
 		self.root.focus_force()
-		print('self.labelFrame die : ' + str(self.labelFrame.winfo_width()) + ' X ' + str(self.labelFrame.winfo_height()))
+		# print('self.labelFrame die : ' + str(self.labelFrame.winfo_width()) + ' X ' + str(self.labelFrame.winfo_height()))
 		if self.labelFrame.winfo_height() > 150:
 			ht = self.labelFrame.winfo_height() + 200
 			self.root.geometry(f"550x{ht}")
@@ -120,15 +122,15 @@ class ShowReminder():
 		with open(REM_FILE, 'r+') as f:
 			reminders = json.loads(f.read())
 			x = reminders.get('reminders').pop(self.reminder[0])
-			print('completed : ' + str(x))
 			reminders.get('completed_reminders').update({self.reminder[0]:x})
+			print('reminder removed from active and added to completed : ' + str(x))
 
 		# write the updated values
 		with open(REM_FILE, 'w') as f:
 			f.write(json.dumps(reminders))
 
 		self.root.destroy()
-		print('destroy called\n')
+		print('reminder dismissed and destroy called\n')
 
 	def postpone_for(self, time_in_mins):
 		'''
@@ -138,10 +140,10 @@ class ShowReminder():
 		import datetime
 		with open(REM_FILE, 'r+') as f:
 			reminders = json.loads(f.read())
-			print('reminders before postpone : ' + str(reminders))
+			# print('reminders before postpone : ' + str(reminders))
 			x = reminders.get('reminders').get(self.reminder[0])
 			reminder_obj = (str(self.reminder[0]),x)
-			print('reminder to be postponed :' + str(reminder_obj))
+			# print('reminder to be postponed :' + str(reminder_obj))
 			# reminder_datetime_obj = get_datetime_obj_from_str(reminder_obj)
 			import datetime
 			now = datetime.datetime.now()
@@ -156,14 +158,14 @@ class ShowReminder():
 			}
 			new_reminder_obj = (str(self.reminder[0]),y)
 			reminders.get('reminders').update({self.reminder[0]:y})
-			print('reminders after postpone : ' + str(reminders))
+			# print('reminders after postpone : ' + str(reminders))
 		
 		#write back updated time for the reminder
 		with open(REM_FILE, 'w') as f:
 			f.write(json.dumps(reminders))
 
 		self.root.destroy()
-		print('destroy called\n')
+		print('reminder postponed and destroy called\n')
 
 	def remindIn10(self):
 		'''
@@ -229,12 +231,47 @@ class ShowReminder():
 		'''
 		utility function to edit reminder
 		'''
-		print('self.reminder edit rminder : ' + str(self.reminder))
+		print('self.reminder object for edit reminder : ' + str(self.reminder))
 		self.root.destroy()
 
 		type_of_entry = 'active_reminder'
 		my_reminder_create_form.Reminder(self.reminder, type_of_entry)
 
+	def putToSilence(self):
+		'''
+		utility function to put the reminder to silence
+		'''
+		global silence_timeout
+		print('self.putToSilence invoked from : reminder popup')
+		type_of_entry = 'active_reminder'
+		self.my_reminder_silence_form=PutToSilence(self.root)
+		self.my_reminder_silence_form.top.wait_window()
+		silence_timeout = int(self.my_reminder_silence_form.value)
+		print('value got for silence_timeout : reminder popup ' + str(silence_timeout))
+
+
+class PutToSilence(object):
+	def __init__(self,root):
+		self.value='0'
+		top=self.top=Toplevel(root)
+		self.l=Label(top, text="Put to Silence for <x> hours :", fg="Orange", bg="Black", width=25)
+		self.l.pack()
+		self.e=Entry(top)
+		self.e.pack()
+		self.e.focus_set()
+		self.b=Button(top, text="Save", underline=0, command=self.cleanup, fg="Orange", bg="Black")
+		self.b.pack()
+		self.top["bg"] = "Black"
+		self.top.attributes('-topmost',1)
+		self.top.bind('<Alt-s>', lambda event: self.cleanup())
+		WIDTH = 250
+		HEIGHT = 80
+		lv_x = 250
+		lv_y = 150
+		self.top.geometry(f'{WIDTH}x{HEIGHT}+{lv_x}+{lv_y}')
+	def cleanup(self):
+		self.value=self.e.get()
+		self.top.destroy()
 
 
 class ShowAlarm():
@@ -272,7 +309,8 @@ class ShowAlarm():
 		self.btn7 = Button(self.buttonRow_1, text="Show", underline=0, command=self.showContent, fg="Orange", bg="Black").grid(row=0, column=0)
 		self.btn1 = Button(self.buttonRow_1, text="Dismiss", underline=0, command=self.dismissAlarm, fg="Orange", bg="Black").grid(row=0, column=0)
 		self.btn2 = Button(self.buttonRow_1, text="Edit", underline=0, command=self.editAlarm, fg="Orange", bg="Black").grid(row=0, column=1)
-		self.btn3 = Button(self.buttonRow_1, text="Snooze 10", underline=8, command= lambda: self.snoozeAlarm(10), fg="Orange", bg="Black").grid(row=0, column=2)
+		self.btn22 = Button(self.buttonRow_1, text="Put To Silence", underline="0" , command=self.putToSilence, fg="Orange", bg="Black").grid(row=0, column=3)
+		self.btn3 = Button(self.buttonRow_1, text="Snooze 10", underline=8, command= lambda: self.snoozeAlarm(10), fg="Orange", bg="Black").grid(row=0, column=4)
 		self.buttonRow_1.grid_columnconfigure(3, minsize=10)
 		self.buttonRow_1.pack()
 		
@@ -284,10 +322,19 @@ class ShowAlarm():
 		self.buttonRow_2.grid_columnconfigure(3, minsize=10)
 		self.buttonRow_2.pack()
 
+		# button frame3 (inside main frame) config
+		self.buttonRow_3 = Frame(self.mainFrame, padx=10, pady=10, bg="Black")
+		self.btn8 = Button(self.buttonRow_3, text="Snooze 12 Hours [O]", underline=11, command=lambda: self.snoozeAlarm(60*12), fg="Orange", bg="Black").grid(row=0, column=0)
+		self.btn9 = Button(self.buttonRow_3, text="Snooze 1 Day [U]",  command=lambda: self.snoozeAlarm(60*24), fg="Orange", bg="Black").grid(row=0, column=1)
+		self.btn10 = Button(self.buttonRow_3, text="Snooze 2 Days [N]", underline=1, command= lambda: self.snoozeAlarm(60*48), fg="Orange", bg="Black").grid(row=0, column=2)
+		self.buttonRow_3.grid_columnconfigure(3, minsize=10)
+		self.buttonRow_3.pack()
+
 		self.root.lift()
 		self.root.attributes("-topmost", True)
 		self.root.bind('<Alt-d>', lambda event: self.dismissAlarm())
 		self.root.bind('<Alt-s>', lambda event: self.showContent())
+		self.root.bind('<Alt-p>', lambda event: self.putToSilence())
 		self.root.bind('<Alt-e>', lambda event: self.editAlarm())
 		
 		self.root.bind('<Alt-0>', lambda event: self.snoozeAlarm(10))
@@ -297,14 +344,13 @@ class ShowAlarm():
 		
 		self.root.update()
 		self.root.focus_force()
-		print('self.labelFrame die : ' + str(self.labelFrame.winfo_width()) + ' X ' + str(self.labelFrame.winfo_height()))
+		# print('self.labelFrame die : ' + str(self.labelFrame.winfo_width()) + ' X ' + str(self.labelFrame.winfo_height()))
 		if self.labelFrame.winfo_height() > 150:
 			ht = self.labelFrame.winfo_height() + 120
 			self.root.geometry(f"550x{ht}")
 		# call mainloop of Tk object
 		self.root.mainloop()
-		
-	
+
 	def position_window(self):
 		'''
 		utiltiy function to position window 
@@ -316,11 +362,10 @@ class ShowAlarm():
 
 	def showContent(self):
 		self.labelFrame.pack()
-	
 
 	def dismissAlarm(self):
 		'''
-		utitlity function to remove reminder form list
+		utitlity function to remove alarm form list
 		'''
 		# update the last_executed date to current date
 		with open(REM_FILE, 'r+') as f:
@@ -353,12 +398,11 @@ class ShowAlarm():
 		self.root.destroy()
 		print('alarm dismissed and destroy called\n')
 
-
 	def editAlarm(self):
 		'''
 		utility function to edit reminder
 		'''
-		print('self.reminder for edit Alarm : ' + str(self.reminder))
+		print('self.reminder object for edit Alarm : ' + str(self.reminder))
 		self.root.destroy()
 		type_of_entry = 'daily_alarm'
 		if self.reminder[1].get('day_of_week'):
@@ -366,7 +410,6 @@ class ShowAlarm():
 		if self.reminder[1].get('day_of_month'):
 			type_of_entry = 'monthly_alarm'
 		my_reminder_create_form.Reminder(self.reminder, type_of_entry)
-	
 	
 	def snoozeAlarm(self, snooze_for):
 		'''
@@ -402,7 +445,7 @@ class ShowAlarm():
 				if cur_snooze == 0:
 					cur_snooze = get_time_till_now(get_time_obj, x, cur_time_obj, cur_snooze)
 				next_snooze_time = cur_snooze + snooze_length
-				print('next_snooze_time : ' + str(next_snooze_time))
+				print('next_snooze_time daily_alarms : ' + str(next_snooze_time))
 				x.update({'snooze':next_snooze_time})
 				reminders.get('daily_alarms').update({self.reminder[0]:x})
 			elif reminders.get('monthly_alarms').get(self.reminder[0]):
@@ -411,7 +454,7 @@ class ShowAlarm():
 				if cur_snooze == 0:
 					cur_snooze = get_time_till_now(get_time_obj, x, cur_time_obj, cur_snooze)
 				next_snooze_time = cur_snooze + snooze_length
-				print('next_snooze_time : ' + str(next_snooze_time))
+				print('next_snooze_time monthly_alarms: ' + str(next_snooze_time))
 				x.update({'snooze':next_snooze_time})
 				reminders.get('monthly_alarms').update({self.reminder[0]:x})
 			elif reminders.get('weekly_alarms').get(self.reminder[0]):
@@ -420,7 +463,7 @@ class ShowAlarm():
 				if cur_snooze == 0:
 					cur_snooze = get_time_till_now(get_time_obj, x, cur_time_obj, cur_snooze)
 				next_snooze_time = cur_snooze + snooze_length
-				print('next_snooze_time : ' + str(next_snooze_time))
+				print('next_snooze_time weekly_alarms: ' + str(next_snooze_time))
 				x.update({'snooze':next_snooze_time})
 				reminders.get('weekly_alarms').update({self.reminder[0]:x})
 
@@ -431,6 +474,17 @@ class ShowAlarm():
 		self.root.destroy()
 		print('alarm snoozed and destroy called\n')
 
+	def putToSilence(self):
+		'''
+		utility function to put the alarm to silence
+		'''
+		global silence_timeout
+		print('self.putToSilence invoked from : alarm popup')
+		type_of_entry = 'alarms'
+		self.my_alarm_silence_form=PutToSilence(self.root)
+		self.my_alarm_silence_form.top.wait_window()
+		silence_timeout = int(self.my_alarm_silence_form.value)
+		print('value got for silence_timeout : alarm popup ' + str(silence_timeout))
 
 
 def controller():
@@ -438,8 +492,14 @@ def controller():
 	Main function to update reminders list
 	and show reminders.
 	'''
+	global silence_timeout
+	silence_timeout = 0
 	while(True):
-
+		# usual time.sleep delay is defined at bottom of the loop - for optimizing cpu consumption
+		# silence timeout is defined below.
+		print('silence_timeout called : ' + str(silence_timeout))
+		time.sleep(silence_timeout*60*60)
+		silence_timeout=0
 		with open(REM_FILE, 'r+') as f:
 			entries = json.loads(f.read())
 
@@ -454,11 +514,12 @@ def controller():
 		cur_time_obj =  datetime.datetime.strptime(cur_time,'%I:%M:%p')
 		cur_date_obj =  datetime.datetime.strptime(cur_date,'%d-%B-%Y')
 		cur_day_of_month = cur_date.split('-')[0]
+		cur_month = cur_date.split('-')[1]
 
 		for reminder in entries.get('reminders').items():
 			reminder_datetime_obj = get_datetime_obj_from_str(reminder)
 			if cur_datetime_obj >= reminder_datetime_obj:
-				print('reminder to show: ' + str(reminder_datetime_obj))
+				print('reminder object to show: ' + str(reminder_datetime_obj))
 				# show reminder window
 				ShowReminder(reminder)
 
@@ -468,7 +529,7 @@ def controller():
 			alarm_time_obj = alarm_time_obj + datetime.timedelta(minutes=snooze_time)
 			last_execution_date = get_date_obj_from_str(daily_alarm)
 			if last_execution_date < cur_date_obj and cur_time_obj >= alarm_time_obj:
-				print('daily alarm to show: ' + str(alarm_time_obj))
+				print('daily alarm object to show: ' + str(alarm_time_obj))
 				# show reminder window
 				ShowAlarm(daily_alarm, 'Daily')
 
@@ -480,7 +541,7 @@ def controller():
 			days_of_week = weekly_alarm[1].get('day_of_week')
 			cur_day_of_week = datetime.datetime.today().strftime('%A')[:3]
 			if last_execution_date < cur_date_obj and cur_time_obj >= week_alarm_time_obj and cur_day_of_week in days_of_week:
-				print('weekly alarm to show: ' + str(week_alarm_time_obj))
+				print('weekly alarm object to show: ' + str(week_alarm_time_obj))
 				# show reminder window
 				ShowAlarm(weekly_alarm, 'Weekly')
 		
@@ -489,13 +550,15 @@ def controller():
 			month_alarm_time_obj = get_time_obj_from_str(monthly_alarm)
 			month_alarm_time_obj = month_alarm_time_obj + datetime.timedelta(minutes=snooze_time)
 			last_execution_date = get_date_obj_from_str(monthly_alarm)
+			last_execution_month = get_month_from_date(last_execution_date)
 			day_of_month_rem = monthly_alarm[1].get('day_of_month')
-			if cur_day_of_month == day_of_month_rem and last_execution_date < cur_date_obj and cur_time_obj >= month_alarm_time_obj:
-				print('monthly alarm to show: ' + str(month_alarm_time_obj))
+			if cur_day_of_month >= day_of_month_rem and cur_month != last_execution_month and last_execution_date < cur_date_obj and cur_time_obj >= month_alarm_time_obj:
+				print('monthly alarm object to show: ' + str(month_alarm_time_obj))
 				# show reminder window
 				ShowAlarm(monthly_alarm, 'Monthly')
 		
-		# delay of 60 seconds	
+		# delay of 60 seconds
+		print('main loop timeout called 10s')
 		time.sleep(10)
 
 
@@ -525,6 +588,9 @@ def get_date_obj_from_str(alarm):
 	alarm_date_obj = datetime.datetime.strptime(alarm_time,'%d-%B-%Y')
 	return alarm_date_obj
 
+
+def get_month_from_date(alarm_date_obj):
+	return alarm_date_obj.strftime("%B")
 
 if __name__ == "__main__":
 	controller()

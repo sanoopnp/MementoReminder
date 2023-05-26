@@ -70,7 +70,6 @@ class AutocompleteCombobox(tkinter.ttk.Combobox):
 			# list at the position of the autocompletion
 
 
-
 class Reminder(object):
 
 	def __init__(self, rem_tuple=None, type_of_entry='active_reminder'):
@@ -567,6 +566,10 @@ class Reminder(object):
 					x = reminders.get('completed_reminders').pop(self.reminder_as_param[0])
 				elif reminders.get('daily_alarms').get(self.reminder_as_param[0]):
 					x = reminders.get('daily_alarms').pop(self.reminder_as_param[0])
+				elif reminders.get('weekly_alarms').get(self.reminder_as_param[0]):
+					x = reminders.get('weekly_alarms').pop(self.reminder_as_param[0])
+				elif reminders.get('monthly_alarms').get(self.reminder_as_param[0]):
+					x = reminders.get('monthly_alarms').pop(self.reminder_as_param[0])
 			# write the updated values
 			with open(REM_FILE, 'w') as f:
 				f.write(json.dumps(reminders))

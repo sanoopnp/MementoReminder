@@ -1,1 +1,136 @@
-{"reminders": {}, "completed_reminders": {"0315234328": {"creation time": "2021-03-15 23:43:28.462123", "reminder": "for testing mark as comp", "date": "15-March-2021", "time": "11:43:PM"}, "0322173301": {"creation time": "2021-03-22 17:37:48.410497", "reminder": "updated act", "date": "22-March-2021", "time": "05:33:PM"}, "0322182100": {"creation time": "2021-03-22 18:21:00.239568", "reminder": "gettin", "date": "22-March-2021", "time": "06:21:PM"}, "0319125810": {"reminder": "check if creation works for 12 and 24hrs", "date": "24-March-2021", "time": "12:43:AM"}, "0316203657": {"reminder": "easy rem", "date": "04-August-2021", "time": "01:37:AM"}, "0804012538": {"reminder": "test2", "date": "04-August-2021", "time": "01:30:AM"}, "0809205708": {"creation time": "2021-08-14 17:11:24.528693", "reminder": "for test", "date": "14-August-2021", "time": "05:12:PM"}}, "daily_alarms": {"0314230724": {"creation time": "2021-03-17 17:53:33.896572", "reminder": "open win", "time": "05:45:PM", "last_executed": "28-March-2021", "snooze": 0}, "0316203851": {"creation time": "2021-03-17 14:16:19.643116", "reminder": "Bridgestone - good dry breaking & wed handling & internal noise & comfort & rolling resistance, \nContinental  - good dry breaking & wet breaking, ", "time": "01:14:AM", "last_executed": "14-August-2021", "snooze": 0}, "0322173211": {"creation time": "2021-03-28 21:57:42.592866", "reminder": "daily", "time": "12:05:AM", "last_executed": "14-August-2021", "snooze": 0}}, "weekly_alarms": {"0322134600": {"creation time": "2021-03-22 13:46:00.222732", "reminder": "week1", "day_of_week": ["Tue", "Sun"], "time": "12:46:AM", "last_executed": "23-March-2021", "snooze": 0}, "0316204143": {"creation time": "2021-03-28 21:56:54.114533", "reminder": "week sun", "day_of_week": ["Sun"], "time": "08:42:PM", "last_executed": "29-March-2021", "snooze": 0}, "0327223653": {"creation time": "2021-03-27 22:37:39.362154", "reminder": "start with humm along with c scale from bottom and practice intervals", "day_of_week": ["Sat", "Sun"], "time": "10:37:PM", "last_executed": "26-March-2021", "snooze": 198}, "0322144336": {"creation time": "2021-03-22 14:46:52.991729", "reminder": "week 2", "day_of_week": ["Wed", "Sat"], "time": "02:44:PM", "last_executed": "27-March-2021", "snooze": 581}, "0322162755": {"creation time": "2021-03-22 16:27:55.430842", "reminder": "week3", "day_of_week": ["Mon", "Fri"], "time": "12:27:AM", "last_executed": "09-August-2021", "snooze": 0}}, "monthly_alarms": {"0318140709": {"creation time": "2021-03-18 14:16:45.355353", "reminder": "com1", "day_of_month": "18", "time": "02:08:PM", "last_executed": "17-March-2021", "snooze": 0}, "0317130058": {"creation time": "2021-03-17 13:02:53.100281", "reminder": "Time sheet", "day_of_month": "02", "time": "12:01:AM", "last_executed": "16-March-2021", "snooze": 197}}}
+{
+    "silence_timeout": {
+        "1226154313": {
+            "reminder": "test1",
+            "date": "27-December-2021",
+            "time": "05:11:AM"
+        }
+    },
+    "reminders": {
+        "1226154313": {
+            "reminder": "test1",
+            "date": "15-July-2022",
+            "time": "12:43:AM"
+        }
+    },
+    "completed_reminders": {
+        "0315234328": {
+            "creation time": "2021-03-15 23:43:28.462123",
+            "reminder": "for testing mark as comp",
+            "date": "15-March-2021",
+            "time": "11:43:PM"
+        },
+        "0322173301": {
+            "creation time": "2021-03-22 17:37:48.410497",
+            "reminder": "updated act",
+            "date": "22-March-2021",
+            "time": "05:33:PM"
+        },
+        "0322182100": {
+            "creation time": "2021-03-22 18:21:00.239568",
+            "reminder": "gettin",
+            "date": "22-March-2021",
+            "time": "06:21:PM"
+        },
+        "0319125810": {
+            "reminder": "check if creation works for 12 and 24hrs",
+            "date": "24-March-2021",
+            "time": "12:43:AM"
+        },
+        "0316203657": {
+            "reminder": "easy rem",
+            "date": "04-August-2021",
+            "time": "01:37:AM"
+        },
+        "0804012538": {
+            "reminder": "test2",
+            "date": "04-August-2021",
+            "time": "01:30:AM"
+        },
+        "0809205708": {
+            "creation time": "2021-08-14 17:11:24.528693",
+            "reminder": "for test",
+            "date": "14-August-2021",
+            "time": "05:12:PM"
+        }
+    },
+    "daily_alarms": {
+        "0316203851": {
+            "creation time": "2021-03-17 14:16:19.643116",
+            "reminder": "Bridgestone - good dry breaking & wed handling & internal noise & comfort & rolling resistance, \nContinental  - good dry breaking & wet breaking, ",
+            "time": "01:14:AM",
+            "last_executed": "09-July-2022",
+            "snooze": 1314
+        },
+        "0322173211": {
+            "creation time": "2021-03-28 21:57:42.592866",
+            "reminder": "daily",
+            "time": "12:05:AM",
+            "last_executed": "10-July-2022",
+            "snooze": 1443
+        }
+    },
+    "weekly_alarms": {
+        "0327223653": {
+            "creation time": "2021-03-27 22:37:39.362154",
+            "reminder": "start withvals",
+            "day_of_week": [
+                "Sat",
+                "Sun"
+            ],
+            "time": "10:37:PM",
+            "last_executed": "26-March-2021",
+            "snooze": 198
+        },
+        "0322144336": {
+            "creation time": "2021-03-22 14:46:52.991729",
+            "reminder": "week 2",
+            "day_of_week": [
+                "Wed",
+                "Sat"
+            ],
+            "time": "02:44:PM",
+            "last_executed": "27-March-2021",
+            "snooze": 581
+        },
+        "0322134600": {
+            "creation time": "2021-03-22 13:46:00.222732",
+            "reminder": "week1",
+            "day_of_week": [
+                "Tue",
+                "Sun"
+            ],
+            "time": "12:46:AM",
+            "last_executed": "10-July-2022",
+            "snooze": 0
+        },
+        "0316204143": {
+            "creation time": "2021-03-28 21:56:54.114533",
+            "reminder": "week sun",
+            "day_of_week": [
+                "Sun"
+            ],
+            "time": "08:42:PM",
+            "last_executed": "10-July-2022",
+            "snooze": 0
+        }
+    },
+    "monthly_alarms": {
+        "0820212546": {
+            "creation time": "2021-08-20 21:25:46.655143",
+            "reminder": "easiest ones backwards of the major key",
+            "day_of_month": "20",
+            "time": "09:26:PM",
+            "last_executed": "20-September-2021",
+            "snooze": 0
+        },
+        "0317130058": {
+            "creation time": "2021-03-17 13:02:53.100281",
+            "reminder": "Time sheet",
+            "day_of_month": "02",
+            "time": "12:01:AM",
+            "last_executed": "10-July-2022",
+            "snooze": 0
+        }
+    }
+}
